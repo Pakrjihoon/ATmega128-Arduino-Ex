@@ -11,7 +11,7 @@ int echoPin2 = 6;
 int trigPin3 = 5;
 int echoPin3 = 4;
  
-//½Ã¸®¾ó ¼Óµµ¼³Á¤, trigPinÀ» Ãâ·Â, echoPinÀ» ÀÔ·ÂÀ¸·Î ¼³Á¤
+//ì‹œë¦¬ì–¼ ì†ë„ì„¤ì •, trigPinì„ ì¶œë ¥, echoPinì„ ì…ë ¥ìœ¼ë¡œ ì„¤ì •
 void setup(){
   pinMode(R, OUTPUT);
   pinMode(G, OUTPUT);
@@ -25,7 +25,7 @@ void setup(){
   pinMode(echoPin3, INPUT);
 }
  
-//ÃÊÀ½ÆÄ¸¦ º¸³½´Ù. ´Ù º¸³»¸é echo°¡ HIGH(½ÅÈ£¹Ş±â) »óÅÂ·Î ´ë±â
+//ì´ˆìŒíŒŒë¥¼ ë³´ë‚¸ë‹¤. ë‹¤ ë³´ë‚´ë©´ echoê°€ HIGH(ì‹ í˜¸ë°›ê¸°) ìƒíƒœë¡œ ëŒ€ê¸°
 void loop(){
   int err;
   float temp, humi;
@@ -43,13 +43,13 @@ void loop(){
   analogWrite(G, 0);
   analogWrite(B, 0);
   
-  // echoPin ÀÌ HIGH¸¦ À¯ÁöÇÑ ½Ã°£À» ÀúÀå ÇÑ´Ù.
+  // echoPin ì´ HIGHë¥¼ ìœ ì§€í•œ ì‹œê°„ì„ ì €ì¥ í•œë‹¤.
   duration = pulseIn(echoPin, HIGH);
   duration2 = pulseIn(echoPin2, HIGH);
   duration3 = pulseIn(echoPin3, HIGH);
   avdu = ((float)(duration+duration2+duration3)/3);
-  // HIGH ¿´À» ¶§ ½Ã°£(ÃÊÀ½ÆÄ°¡ º¸³Â´Ù°¡ ´Ù½Ã µé¾î¿Â ½Ã°£)À» °¡Áö°í °Å¸®¸¦ °è»ê ÇÑ´Ù.
-  // 340Àº ÃÊ´ç ÃÊÀ½ÆÄ(¼Ò¸®)ÀÇ ¼Óµµ, 10000Àº ¹Ğ¸®¼¼ÄÁµå¸¦ ¼¼ÄÁµå·Î, ¿Õº¹°Å¸®ÀÌ¹Ç·Î 2·Î ³ª´²ÁØ´Ù.
+  // HIGH ì˜€ì„ ë•Œ ì‹œê°„(ì´ˆìŒíŒŒê°€ ë³´ëƒˆë‹¤ê°€ ë‹¤ì‹œ ë“¤ì–´ì˜¨ ì‹œê°„)ì„ ê°€ì§€ê³  ê±°ë¦¬ë¥¼ ê³„ì‚° í•œë‹¤.
+  // 340ì€ ì´ˆë‹¹ ì´ˆìŒíŒŒ(ì†Œë¦¬)ì˜ ì†ë„, 10000ì€ ë°€ë¦¬ì„¸ì»¨ë“œë¥¼ ì„¸ì»¨ë“œë¡œ, ì™•ë³µê±°ë¦¬ì´ë¯€ë¡œ 2ë¡œ ë‚˜ëˆ ì¤€ë‹¤.
   distance = ((float)(340 * duration) / 10000) / 2;
   distance2 = ((float)(340 * duration2) / 10000) / 2;
   distance3 = ((float)(340 * duration3) / 10000) / 2;
@@ -57,49 +57,49 @@ void loop(){
  
   int iValue0 = analogRead(A3);
   Serial.println();
-  Serial.print("¹°ÀÇ ¾ç : ");
+  Serial.print("ë¬¼ì˜ ì–‘ : ");
   Serial.print((1024 - iValue0)*0.1);
   Serial.println(" %");
-  //½Ã¸®¾ó¸ğ´ÏÅÍ¿¡ Echo°¡ HIGHÀÎ ½Ã°£ ¹× °Å¸®¸¦ Ç¥½ÃÇØÁØ´Ù.
+  //ì‹œë¦¬ì–¼ëª¨ë‹ˆí„°ì— Echoê°€ HIGHì¸ ì‹œê°„ ë° ê±°ë¦¬ë¥¼ í‘œì‹œí•´ì¤€ë‹¤.
  
   Serial.println(rice);
   if(rice > 0.45){
-    Serial.println("»ç·á°¡ °ÅÀÇ ¾ø½À´Ï´Ù.");
+    Serial.println("ì‚¬ë£Œê°€ ê±°ì˜ ì—†ìŠµë‹ˆë‹¤.");
   }
   else if(rice >=-0.45&&rice <= 0.45 ){
-    Serial.println("»ç·á°¡ ¹İÁ¤µµ ÀÖ½À´Ï´Ù."); 
+    Serial.println("ì‚¬ë£Œê°€ ë°˜ì •ë„ ìˆìŠµë‹ˆë‹¤."); 
   }
   else if(rice <-0.5){
-   Serial.println("»ç·á°¡ ÃæºĞÇÕ´Ï´Ù.");
+   Serial.println("ì‚¬ë£Œê°€ ì¶©ë¶„í•©ë‹ˆë‹¤.");
   }
  
  
   delay(900);
- if((err=dht11.read(humi, temp))==0) //¿Âµµ, ½Àµµ ÀĞ¾î¿Í¼­ Ç¥½Ã
+ if((err=dht11.read(humi, temp))==0) //ì˜¨ë„, ìŠµë„ ì½ì–´ì™€ì„œ í‘œì‹œ
   {
     if(temp>=30.0){
-      Serial.println("»ç·áÀÇ ¿Âµµ°¡ ³ô½À´Ï´Ù!");
-      Serial.print("ÇöÀç »ç·áÀÇ ¿Âµµ");
+      Serial.println("ì‚¬ë£Œì˜ ì˜¨ë„ê°€ ë†’ìŠµë‹ˆë‹¤!");
+      Serial.print("í˜„ì¬ ì‚¬ë£Œì˜ ì˜¨ë„");
       Serial.println(temp);
     }
     else if(humi>=80.0){
-      Serial.println("»ç·á°¡ ´ª´ªÇÕ´Ï´Ù. °ÇÁ¶ ½ÃÄÑÁÖ¼¼¿ä!");
-      Serial.print("ÇöÀç »ç·áÅë ½Àµµ : ");
+      Serial.println("ì‚¬ë£Œê°€ ëˆ…ëˆ…í•©ë‹ˆë‹¤. ê±´ì¡° ì‹œì¼œì£¼ì„¸ìš”!");
+      Serial.print("í˜„ì¬ ì‚¬ë£Œí†µ ìŠµë„ : ");
       Serial.println(humi);
     }
     else if(temp>=31.0 && humi>=81.0){
-      Serial.println("»ç·áÀÇ »óÅÂ°¡ ÁÁÁö ¾Ê½À´Ï´Ù. ³ÃÀå º¸°ü È¤Àº ¹Ù²ãÁÖ¼¼¿ä");
+      Serial.println("ì‚¬ë£Œì˜ ìƒíƒœê°€ ì¢‹ì§€ ì•ŠìŠµë‹ˆë‹¤. ëƒ‰ì¥ ë³´ê´€ í˜¹ì€ ë°”ê¿”ì£¼ì„¸ìš”");
     }
     else
     {
-    Serial.print("»ç·áÅë¿Âµµ:");
+    Serial.print("ì‚¬ë£Œí†µì˜¨ë„:");
     Serial.print(temp);
-    Serial.print(" »ç·áÅë½Àµµ:");
+    Serial.print(" ì‚¬ë£Œí†µìŠµë„:");
     Serial.print(humi);
     Serial.println();
     }
   }
-  else                                //¿¡·¯ÀÏ °æ¿ì Ã³¸®
+  else                                //ì—ëŸ¬ì¼ ê²½ìš° ì²˜ë¦¬
   {
     Serial.println();
     Serial.print("Error No :");
